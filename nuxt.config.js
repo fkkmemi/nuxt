@@ -37,15 +37,20 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/vuetify'],
+  plugins: ['@/plugins/vuetify', '@/plugins/etc'],
 
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'vuetify-dialog/nuxt'
+    // ['vuetify-dialog/nuxt', { property: '$dialog' }] // 'vuetify-dialog/nuxt'
   ],
+  // vuetifyDialog: {
+  //   property: '$dialog'
+  // },
   /*
    ** Axios module configuration
    */

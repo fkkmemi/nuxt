@@ -4768,6 +4768,11 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
   dependencies:
     minimist "0.0.8"
 
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -7583,6 +7588,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-asyncable@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/vue-asyncable/-/vue-asyncable-0.2.0.tgz#90221cba76fa8601b1331231b1a7c91cd8403f83"
+  integrity sha512-AKuYhnjwMVrOgPct9WYbK4S7aMaHbWbznWY8IrCJsHS0pyEZc7lnpilJLGhH3MmRoQL43M0ofPJyHuxnu30McQ==
+
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-5.0.0.tgz#00f4e4da94ec974b821a26ff0ed0f7a78402b8a1"
@@ -7670,6 +7680,21 @@ vue@^2.6.10:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
+
+vuedl@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/vuedl/-/vuedl-0.3.0.tgz#3b25680c4d722e8d6c52d112fd66d271a91950ef"
+  integrity sha512-y+aYI7cvLfScwGlaGDx1HxCf+Ke8ZEoct98r/jr9ETMSg7dErYrBOxqJjFPWGQmj8rCM58XZ+hs02/3DL0sStw==
+  dependencies:
+    vue-asyncable "^0.2.0"
+
+vuetify-dialog@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/vuetify-dialog/-/vuetify-dialog-0.3.4.tgz#970f83602dfc0d1737d33d80fe5f04c857224896"
+  integrity sha512-tvMBTWO9b5hw9PKntQgwUYvfqcnCsX6cHa5VpZ1I0LFpPPB04gd2Oys2hMrueS8rUS++qBP+zdDSamOPU5z40g==
+  dependencies:
+    vue-asyncable "^0.2.0"
+    vuedl "^0.3.0"
 
 vuetify-loader@^1.2.1:
   version "1.2.2"
