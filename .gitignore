@@ -82,3 +82,12 @@ dist
 
 # Service worker
 sw.*
+
+# firebase
+.firebaserc
+database.rules.json
+firebase.json
+package-lock.json
+functions
+public
+
