@@ -17,6 +17,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
+    "firebase": "5.5.4",
     "moment": "^2.24.0",
     "nuxt": "^2.4.0",
     "vuetify": "^1.5.5",
@@ -42,5 +43,8 @@
     "prettier": "^1.16.4",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2"
+  },
+  "engines": {
+    "node": "8"
   }
 }

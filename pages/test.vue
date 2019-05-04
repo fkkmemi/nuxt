@@ -19,6 +19,12 @@
       <v-btn @click="dialogOpen">
         dialog
       </v-btn>
+      <v-btn @click="dbWrite">
+        dbWrite
+      </v-btn>
+      <v-btn @click="dbRead">
+        dbRead
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -51,6 +57,18 @@ export default {
         text: 'okok??'
       })
       this.text = r ? 'YEEEES' : 'NOOOOOO'
+    },
+    async dbWrite() {
+      const r = await this.$db.collection('test').add({
+        title: 'test',
+        content: 'oh yes'
+      })
+      this.text = r.id
+    },
+    async dbRead() {
+      const r = await this.$db.collection('test').get()
+      // this.text = JSON.stringify(r.docs[0])
+      console.log(r.docs[0])
     }
   }
 }
