@@ -6,6 +6,17 @@
 - yarn
 - firebase-tools
 
+## .env File setting
+
+eg)
+```text
+FIREBASE_APIKEY=yourKey
+FIREBASE_AUTHDOMAIN=yourDomain
+FIREBASE_PROJECTID=yourProjectId
+``` 
+
+guide: [https://firebase.google.com/docs/firestore/quickstart](https://firebase.google.com/docs/firestore/quickstart)
+
 ## Build Setup
 
 ``` bash
@@ -32,6 +43,8 @@ $ firebase login
 # init
 $ firebase init
 ```
+
+Select all and enter default
 
 ## deploy
 
