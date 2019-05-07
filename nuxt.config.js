@@ -1,5 +1,6 @@
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 const pkg = require('./package')
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -45,6 +46,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    // '@nuxtjs/dotenv',
     'vuetify-dialog/nuxt'
     // ['vuetify-dialog/nuxt', { property: '$dialog' }] // 'vuetify-dialog/nuxt'
   ],
@@ -87,5 +89,11 @@ module.exports = {
   serverMiddleware: [{ path: '/api', handler: '~/api/index.js' }],
   generate: {
     dir: 'public'
+  },
+  env: {
+    FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,
+    FIREBASE_AUTHDOMAIN: process.env.FIREBASE_AUTHDOMAIN,
+    FIREBASE_PROJECTID: process.env.FIREBASE_PROJECTID,
+    abcd: 1234
   }
 }

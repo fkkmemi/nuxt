@@ -31,14 +31,6 @@ $ firebase login
 
 # init
 $ firebase init
-? Select a default Firebase project for this directory: # select your choise
-? What file should be used for Database Rules? database.rules.json 
-? What language would you like to use to write Cloud Functions? JavaScript
-? Do you want to use ESLint to catch probable bugs and enforce style? No
-✔  Wrote functions/package.json
-✔  Wrote functions/index.js
-✔  Wrote functions/.gitignore
-? Do you want to install dependencies with npm now? Yes
 ```
 
 ## deploy

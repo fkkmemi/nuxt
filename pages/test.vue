@@ -7,23 +7,11 @@
       <v-textarea v-model="text" />
     </v-card-text>
     <v-card-actions>
-      <v-btn @click="test">
-        test
+      <v-btn @click="write">
+        write
       </v-btn>
-      <v-btn @click="hello">
-        hello
-      </v-btn>
-      <v-btn @click="moment">
-        moment
-      </v-btn>
-      <v-btn @click="dialogOpen">
-        dialog
-      </v-btn>
-      <v-btn @click="dbWrite">
-        dbWrite
-      </v-btn>
-      <v-btn @click="dbRead">
-        dbRead
+      <v-btn @click="read">
+        read
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -36,39 +24,29 @@ export default {
     }
   },
   methods: {
-    async test() {
-      this.text = 'fwefwij'
-      const r = await this.$axios.get('/api')
-      this.text = r.data
+    async write() {
+      try {
+        const r = await this.$db.collection('users').add({
+          first: 'Ada',
+          last: 'Lovelace',
+          born: 1815
+        })
+        this.text = `Document written with ID: => ${r.id}`
+      } catch (e) {
+        await this.$dialog.notify.error(e.message)
+      }
     },
-    async hello() {
-      this.text = 'gwegwg'
-      const r = await this.$axios.get('/api/hello')
-      this.text = r.data
-    },
-    moment() {
-      this.text = this.$moment()
-        .toDate()
-        .toLocaleTimeString()
-    },
-    async dialogOpen() {
-      const r = await this.$dialog.confirm({
-        title: 'hello?',
-        text: 'okok??'
-      })
-      this.text = r ? 'YEEEES' : 'NOOOOOO'
-    },
-    async dbWrite() {
-      const r = await this.$db.collection('test').add({
-        title: 'test',
-        content: 'oh yes'
-      })
-      this.text = r.id
-    },
-    async dbRead() {
-      const r = await this.$db.collection('test').get()
-      // this.text = JSON.stringify(r.docs[0])
-      console.log(r.docs[0])
+    async read() {
+      try {
+        const rs = await this.$db.collection('users').get()
+        const ss = []
+        rs.forEach(r => {
+          ss.push(`${r.id} => ${JSON.stringify(r.data())}`)
+        })
+        this.text = ss.join('\n')
+      } catch (e) {
+        await this.$dialog.notify.error(e.message)
+      }
     }
   }
 }

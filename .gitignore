@@ -84,10 +84,12 @@ dist
 sw.*
 
 # firebase
-.firebaserc
-database.rules.json
-firebase.json
-package-lock.json
-functions
 public
+.firebaserc
+# database.rules.json
+# firebase.json
+# firestore.indexes.json
+# firestore.rules
+# package-lock.json
+# storage.rules
 
