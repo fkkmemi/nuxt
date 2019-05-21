@@ -84,6 +84,7 @@ dist
 sw.*
 
 # firebase
+.firebase
 public
 .firebaserc
 # database.rules.json

@@ -13,6 +13,9 @@
       <v-btn @click="read">
         read
       </v-btn>
+      <v-btn @click="test">
+        test
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -47,6 +50,12 @@ export default {
       } catch (e) {
         await this.$dialog.notify.error(e.message)
       }
+    },
+    async test() {
+      const { data } = await this.$axios.get(
+        'http://localhost:5000/memi-nuxt/us-central1/abc'
+      )
+      this.text = data
     }
   }
 }
