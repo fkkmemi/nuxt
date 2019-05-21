@@ -11,11 +11,12 @@
         :total-items="totalItems"
         :pagination.sync="pagination"
         :rows-per-page-items="perPages"
-        item-key="id"
+        item-key="createdAt"
         rows-per-page-text=""
       >
         <template v-slot:items="props">
           <td>{{ props.item.id }}</td>
+          <td>{{ props.item.createdAt }}</td>
           <td>{{ props.item.title }}</td>
           <td>{{ props.item.content }}</td>
           <td>
@@ -35,6 +36,9 @@
       </v-btn>
       <v-btn @click="addDialog">
         add
+      </v-btn>
+      <v-btn @click="test">
+        test
       </v-btn>
       <v-dialog v-model="dialog" max-width="600px">
         <v-card>
@@ -81,6 +85,7 @@ export default {
     return {
       headers: [
         { text: 'id', value: 'id' },
+        { text: 'createdAt', value: 'createdAt' },
         { text: 'title', value: 'title' },
         { text: 'content', value: 'content' },
         { text: 'actions', value: 'actions', sorted: false }
@@ -89,7 +94,8 @@ export default {
       loading: false,
       totalItems: 0,
       pagination: {
-        descending: true
+        descending: false,
+        sortBy: 'createdAt'
       },
       perPages: [5, 10, 60, 120, 240, 600],
       form: {
@@ -108,11 +114,11 @@ export default {
     },
     setOrder() {
       let order = this.pagination.sortBy
-      if (!this.pagination.sortBy) order = 'st'
+      if (!this.pagination.sortBy) order = 'createdAt'
       return order
     },
     setSort() {
-      return this.pagination.descending ? -1 : 1
+      return this.pagination.descending ? 'desc' : 'asc'
     },
     pages() {
       if (this.pagination.rowsPerPage == null || this.totalItems == null)
@@ -122,12 +128,12 @@ export default {
     }
   },
   watch: {
-    // pagination: {
-    //   handler() {
-    //     this.list()
-    //   },
-    //   deep: true
-    // }
+    pagination: {
+      handler() {
+        this.list()
+      },
+      deep: true
+    }
   },
   mounted() {
     this.list()
@@ -135,17 +141,41 @@ export default {
   methods: {
     async list() {
       try {
-        const snapshot = await this.$db.collection('boards').get()
+        console.log(
+          this.pagination.sortBy,
+          this.setOrder,
+          this.setSort,
+          this.setSkip,
+          this.pagination.rowsPerPage
+        )
+        const total = await this.$db
+          .collection('boards')
+          // .select('id')
+          .get()
+        // console.log(total)
+        let cnt = 0
+        total.forEach(v => cnt++)
+        this.totalItems = cnt
+        const snapshot = await this.$db
+          .collection('boards')
+          // .where('population', '>', 2500000)
+          .orderBy(this.setOrder, this.setSort)
+          // .startAt(this.setSkip)
+          .limit(this.pagination.rowsPerPage)
+          .get()
         this.items = []
         snapshot.forEach(doc => {
           // console.log(doc.id, '=>', doc.data())
           const d = doc.data()
+
           this.items.push({
             id: doc.id,
+            createdAt: d.createdAt.toDate().toLocaleString(),
             title: d.title,
             content: d.content
           })
         })
+        console.log('hi!!')
         // this.items = r
         // this.text = `Document written with ID: => ${r.id}`
       } catch (e) {
@@ -155,7 +185,10 @@ export default {
     async add() {
       this.dialog = false
       try {
-        const r = await this.$db.collection('boards').add(this.form)
+        const d = Object.assign(this.form)
+        d.createdAt = new Date()
+        console.log(d)
+        const r = await this.$db.collection('boards').add(d)
         console.log(r)
         await this.list()
       } catch (e) {
@@ -201,6 +234,14 @@ export default {
       this.form.title = p.title
       this.form.content = p.content
       this.dialog = true
+    },
+    async test() {
+      const r = await this.$db
+        .collection('boards')
+        .orderBy('title', 'desc')
+        .limit(2)
+        .get()
+      console.log(r)
     }
   }
 }
