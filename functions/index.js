@@ -1,12 +1,16 @@
-const functions = require('firebase-functions');
-const express = require('express');
-const cors = require('cors');
+const functions = require('firebase-functions')
+const admin = require('firebase-admin')
+const express = require('express')
+const cors = require('cors')
 
-const app = express();
+admin.initializeApp(functions.config().firebase)
+const db = admin.firestore()
 
-app.use(cors({ origin: true }));
+const app = express()
 
-app.get('/', (req, res) => res.send('abcdefg'));
+app.use(cors({ origin: true }))
 
-exports.widgets = functions.https.onRequest(app),
+app.get('/', (req, res) => res.send('abcdefg'))
+
+exports.widgets = functions.https.onRequest(app)
 exports.test = functions.https.onRequest(require('./test'))

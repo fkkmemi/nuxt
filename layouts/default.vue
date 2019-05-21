@@ -84,6 +84,11 @@ export default {
           icon: 'bubble_chart',
           title: 'test',
           to: '/test'
+        },
+        {
+          icon: 'bubble_chart',
+          title: 'crud',
+          to: '/crud'
         }
       ],
       miniVariant: false,
