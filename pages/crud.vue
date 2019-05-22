@@ -15,6 +15,7 @@
         rows-per-page-text=""
       >
         <template v-slot:items="props">
+          <td>{{ props.item.no }}</td>
           <td>{{ props.item.id }}</td>
           <td>{{ props.item.createdAt }}</td>
           <td>{{ props.item.title }}</td>
@@ -84,18 +85,19 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'id', value: 'id' },
-        { text: 'createdAt', value: 'createdAt' },
-        { text: 'title', value: 'title' },
-        { text: 'content', value: 'content' },
-        { text: 'actions', value: 'actions', sorted: false }
+        { text: 'no', value: 'no' },
+        { text: 'id', value: 'id', sortable: false },
+        { text: 'createdAt', value: 'createdAt', sortable: false },
+        { text: 'title', value: 'title', sortable: false },
+        { text: 'content', value: 'content', sortable: false },
+        { text: 'actions', value: 'actions', sortable: false }
       ],
       items: [],
       loading: false,
       totalItems: 0,
       pagination: {
         descending: false,
-        sortBy: 'createdAt'
+        sortBy: 'no'
       },
       perPages: [5, 10, 60, 120, 240, 600],
       form: {
@@ -109,12 +111,22 @@ export default {
   },
   computed: {
     setSkip() {
-      if (this.pagination.page <= 0) return 0
-      return (this.pagination.page - 1) * this.pagination.rowsPerPage
+      // if (this.pagination.sortBy === 'no') {
+      if (this.pagination.descending) {
+        return (
+          this.totalItems -
+          (this.pagination.page - 1) * this.pagination.rowsPerPage
+        )
+      } else {
+        return (this.pagination.page - 1) * this.pagination.rowsPerPage
+      }
+      // } else return 0
+      // if (this.pagination.page <= 0) return 0
+      // return (this.pagination.page - 1) * this.pagination.rowsPerPage
     },
     setOrder() {
       let order = this.pagination.sortBy
-      if (!this.pagination.sortBy) order = 'createdAt'
+      if (!this.pagination.sortBy) order = 'no'
       return order
     },
     setSort() {
@@ -148,18 +160,18 @@ export default {
           this.setSkip,
           this.pagination.rowsPerPage
         )
-        const total = await this.$db
+        const l = await this.$db
           .collection('boards')
-          // .select('id')
+          .orderBy('no', 'desc')
+          .limit(1)
           .get()
-        // console.log(total)
-        let cnt = 0
-        total.forEach(v => cnt++)
-        this.totalItems = cnt
+        if (l.docs.length)
+          this.totalItems = l.docs[l.docs.length - 1].data().no + 1
         const snapshot = await this.$db
           .collection('boards')
           // .where('population', '>', 2500000)
           .orderBy(this.setOrder, this.setSort)
+          // .startAt(this.setSkip)
           // .startAt(this.setSkip)
           .limit(this.pagination.rowsPerPage)
           .get()
@@ -170,6 +182,7 @@ export default {
 
           this.items.push({
             id: doc.id,
+            no: d.no,
             createdAt: d.createdAt.toDate().toLocaleString(),
             title: d.title,
             content: d.content
@@ -184,8 +197,17 @@ export default {
     },
     async add() {
       this.dialog = false
+      const l = await this.$db
+        .collection('boards')
+        .orderBy('no', 'desc')
+        .limit(1)
+        .get()
+      console.log(l.docs.length)
+      let no = 0
+      if (l.docs.length) no = l.docs[l.docs.length - 1].data().no + 1
       try {
         const d = Object.assign(this.form)
+        d.no = no
         d.createdAt = new Date()
         console.log(d)
         const r = await this.$db.collection('boards').add(d)
