@@ -2,6 +2,7 @@ import Vue from 'vue'
 import moment from 'moment'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 
 Vue.prototype.$moment = moment
 if (!firebase.apps.length) {
@@ -15,6 +16,8 @@ if (!firebase.apps.length) {
   Vue.prototype.$db.settings({
     timestampsInSnapshots: true
   })
+  Vue.prototype.$auth = firebase.auth
+  // Vue.prototype.$firebase = firebase
 
   // Initialize document
   // const cityRef = Vue.prototype.$db.collection('cities').doc('SF')
