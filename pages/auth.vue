@@ -32,6 +32,12 @@
       <v-btn @click="signOut">
         signOut
       </v-btn>
+      <v-btn @click="getToken">
+        getToken
+      </v-btn>
+      <v-btn @click="reqNormal">
+        reqNormal
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -70,14 +76,13 @@ export default {
     getUser() {
       const u = this.$auth().currentUser
       this.msg = JSON.stringify(u)
-      console.log(u)
+      console.log(u.claims)
     },
     async setUser() {
       const u = this.$auth().currentUser
       try {
         await u.updateProfile({
-          displayName: this.form.email,
-          myVal: 'abcdefg'
+          displayName: this.form.email
         })
         console.log('update ok')
       } catch (e) {
@@ -101,6 +106,25 @@ export default {
       } catch (e) {
         console.error(e.message)
       }
+    },
+    async getToken() {
+      const tk = await this.$auth().currentUser.getIdToken(
+        /* forceRefresh */ true
+      )
+      console.log(tk)
+      this.msg = tk
+    },
+    async reqNormal() {
+      const tk = await this.$auth().currentUser.getIdToken(
+        /* forceRefresh */ true
+      )
+      // console.log(tk)
+      // this.msg = tk
+      this.$axios.setToken('Bearer ' + tk)
+      const data = await this.$axios.get(
+        'http://localhost:5000/memi-nuxt/us-central1/widgets'
+      )
+      console.log(data)
     }
   }
 }

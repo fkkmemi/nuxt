@@ -53,7 +53,7 @@ export default {
     },
     async test() {
       const { data } = await this.$axios.get(
-        'http://localhost:5000/memi-nuxt/us-central1/abc'
+        'http://localhost:5000/memi-nuxt/us-central1/test'
       )
       this.text = data
     }

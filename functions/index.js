@@ -4,12 +4,20 @@ const express = require('express')
 const cors = require('cors')
 
 admin.initializeApp(functions.config().firebase)
-const db = admin.firestore()
+// const db = admin.firestore()
 
 const app = express()
 
-app.use(cors({ origin: true }))
+const verifyToken = async (req, res, next) => {
+  console.log(JSON.stringify(req.headers))
+  const tk = req.headers.authorization.split(' ')[1]
+  const u = await admin.auth().verifyIdToken(tk)
+  console.log(u)
+  next()
+}
 
+app.use(cors({ origin: true }))
+app.use(verifyToken)
 app.get('/', (req, res) => res.send('abcdefg'))
 
 exports.widgets = functions.https.onRequest(app)
