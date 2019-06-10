@@ -20,6 +20,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "firebase": "5.5.4",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "nuxt": "^2.4.0",
     "vuetify": "^1.5.5",
@@ -47,6 +48,6 @@
     "stylus-loader": "^3.0.2"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   }
 }

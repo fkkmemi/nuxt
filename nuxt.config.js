@@ -41,7 +41,9 @@ module.exports = {
   plugins: [
     // { src: '@/plugins/vuetify', mode: 'client' },
     '@/plugins/vuetify',
-    { src: '@/plugins/etc', mode: 'client' }
+    '@/plugins/etc',
+    '@/plugins/firebase'
+    // { src: '~plugins/firebase.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js modules

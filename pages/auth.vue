@@ -52,15 +52,7 @@ export default {
       msg: ''
     }
   },
-  mounted() {
-    this.$auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log(user)
-      } else {
-        console.log('not actions...')
-      }
-    })
-  },
+  mounted() {},
   methods: {
     async signUp() {
       try {
@@ -76,7 +68,9 @@ export default {
     getUser() {
       const u = this.$auth().currentUser
       this.msg = JSON.stringify(u)
-      console.log(u.claims)
+      // console.log(u.claims)
+      // this.$store.commit('setUser', u)
+      // this.$store.commit('increment')
     },
     async setUser() {
       const u = this.$auth().currentUser
