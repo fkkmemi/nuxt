@@ -14,6 +14,7 @@ export default function({ store, redirect }) {
   Vue.prototype.$auth = firebase.auth
 
   firebase.auth().onAuthStateChanged(user => {
+    // console.log(user)
     store.commit('setUser', user)
   })
 }

@@ -10,9 +10,14 @@
 
             <v-list-tile-content>
               <v-list-tile-title>
-                {{ _.get($store.state.user, 'displayName', '디스 없다') }}
+                {{ _.get($store.state.user, 'displayName', '로그인 필요') }}
               </v-list-tile-title>
             </v-list-tile-content>
+            <v-list-tile-action>
+              <v-btn v-if="$store.state.user" icon @click="signOut">
+                <v-icon>lock_open</v-icon>
+              </v-btn>
+            </v-list-tile-action>
           </v-list-tile>
         </v-list>
       </v-toolbar>
@@ -92,6 +97,16 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js'
+    }
+  },
+  methods: {
+    async signOut() {
+      try {
+        await this.$auth().signOut()
+        this.$router.push('/auth/signIn')
+      } catch (e) {
+        console.error(e.message)
+      }
     }
   }
 }

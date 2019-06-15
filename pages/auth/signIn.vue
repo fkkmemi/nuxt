@@ -1,0 +1,49 @@
+<template>
+  <v-card>
+    <v-card-title primary-title>
+      로그인
+    </v-card-title>
+    <v-card-text>
+      <v-form>
+        <v-text-field v-model="form.email" label="email"></v-text-field>
+        <v-text-field
+          v-model="form.password"
+          label="password"
+          type="password"
+        ></v-text-field>
+      </v-form>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn @click="signIn">
+        signIn
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  mounted() {},
+  methods: {
+    async signIn() {
+      try {
+        const r = await this.$auth().signInWithEmailAndPassword(
+          this.form.email,
+          this.form.password
+        )
+        this.$router.push('/')
+        console.log(r)
+      } catch (e) {
+        console.error(e.message)
+      }
+    }
+  }
+}
+</script>
