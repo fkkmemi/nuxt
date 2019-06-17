@@ -30,15 +30,29 @@ export default {
       }
     }
   },
-  mounted() {},
+  async mounted() {
+    await this.$recaptcha.init()
+  },
   methods: {
     async signIn() {
       try {
-        const r = await this.$auth().signInWithEmailAndPassword(
-          this.form.email,
-          this.form.password
+        const token = await this.$recaptcha.execute('login')
+        console.log('ReCaptcha token:', token)
+        if (!token) return false
+        // const r = await this.$auth().signInWithEmailAndPassword(
+        //   this.form.email,
+        //   this.form.password
+        // )
+        const r = await this.$axios.post(
+          'https://us-central1-memi-nuxt.cloudfunctions.net/auth/signin',
+          {
+            email: this.form.email,
+            password: this.form.password,
+            token: token
+          }
         )
         this.$router.push('/')
+        this.$store.commit('setUser', { displayName: 'test' })
         console.log(r)
       } catch (e) {
         console.error(e.message)

@@ -1081,6 +1081,11 @@
     consola "^2.5.6"
     http-proxy-middleware "^0.19.1"
 
+"@nuxtjs/recaptcha@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/recaptcha/-/recaptcha-0.5.0.tgz#e2d726c14781bb97b0dbc7d1ed438b84501f8be8"
+  integrity sha512-Td+pkX9CUuIpCc6DRkwjgEreFbVtKFcdSC5VnMsRg7jUiR+pRvZ149A8nw72BU+8lyiSp3WS7bE2EZVqrnqTrQ==
+
 "@nuxtjs/youch@^4.2.3":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/@nuxtjs/youch/-/youch-4.2.3.tgz#36f8b22df5a0efaa81373109851e1d857aca6bed"

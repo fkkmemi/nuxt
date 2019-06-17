@@ -22,3 +22,4 @@ app.get('/', (req, res) => res.send('abcdefg'))
 
 exports.widgets = functions.https.onRequest(app)
 exports.test = functions.https.onRequest(require('./test'))
+exports.auth = functions.https.onRequest(require('./auth'))

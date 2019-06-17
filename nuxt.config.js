@@ -15,6 +15,12 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
+    script: [
+      {
+        src:
+          'https://www.google.com/recaptcha/api.js?render=6LdVHKkUAAAAAOyoWHConyGQS2F-iAbFFw4e-8_V'
+      }
+    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
@@ -52,7 +58,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // '@nuxtjs/dotenv',
-    'vuetify-dialog/nuxt'
+    'vuetify-dialog/nuxt',
+    '@nuxtjs/recaptcha'
     // ['vuetify-dialog/nuxt', { property: '$dialog' }] // 'vuetify-dialog/nuxt'
   ],
   // vuetifyDialog: {
@@ -66,6 +73,12 @@ module.exports = {
   },
   router: {
     middleware: 'auth'
+  },
+  recaptcha: {
+    hideBadge: true,
+    siteKey: '6LdVHKkUAAAAAOyoWHConyGQS2F-iAbFFw4e-8_V',
+
+    version: 3
   },
 
   /*
