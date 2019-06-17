@@ -2,7 +2,7 @@
 
 ## Install tools
 
-- node v8
+- node
 - yarn
 - firebase-tools
 
@@ -13,6 +13,7 @@ eg)
 FIREBASE_APIKEY=yourKey
 FIREBASE_AUTHDOMAIN=yourDomain
 FIREBASE_PROJECTID=yourProjectId
+RECAPTCHA_KEY=yourRecaptchaKey
 ``` 
 
 guide: [https://firebase.google.com/docs/firestore/quickstart](https://firebase.google.com/docs/firestore/quickstart)
@@ -51,3 +52,14 @@ Select all and enter default
 ```bash
 $ yarn firebase:deploy
 ```
+
+## recaptcha setting
+
+```bash
+$ cd functions
+$ firebase functions:config:set recaptcha.key="THE API KEY"
+```
+
+참고: [https://www.google.com/recaptcha](https://www.google.com/recaptcha)
+
+리캡차 키를 파이어베이스 펑션스에 저장함

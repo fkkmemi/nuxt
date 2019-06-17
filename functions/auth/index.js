@@ -2,22 +2,18 @@
 const express = require('express')
 const axios = require('axios')
 const cors = require('cors')
+const functions = require('firebase-functions')
 
 const app = express()
 
-// const aaa = (req, res) => {
-//   res.send('aaa da!')
-// }
-// // build multiple CRUD interfaces:
-
 app.use(cors({ origin: true }))
-app.post('/signin', (req, res) => {
-  const body = req.body
-  if (!body.email || !body.password || !body.token) return res.status(400).end()
+app.post('/recaptcha', (req, res) => {
+  const token = req.body.token
+  if (!token) return res.status(400).end()
   const url = 'https://www.google.com/recaptcha/api/siteverify'
   const opt = {
-    secret: '6LdVHKkUAAAAAO93PK8Vzl-sZz-FHFgk2rH9dybX',
-    response: body.token,
+    secret: functions.config().recaptcha.key,
+    response: token,
     remoteip: req.ip
   }
   axios
@@ -26,12 +22,8 @@ app.post('/signin', (req, res) => {
       res.send({ success: true })
     })
     .catch(e => {
-      // req.status(401).end()
-      res.send(e.message)
+      req.status(401).end()
     })
 })
 
-// Expose Express API as a single Cloud Function:
-// exports.aaa = functions.https.onRequest(app);
-
-module.exports = app // functions.https.onRequest(app)
+module.exports = app

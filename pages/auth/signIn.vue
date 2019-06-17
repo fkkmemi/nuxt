@@ -36,27 +36,27 @@ export default {
   methods: {
     async signIn() {
       try {
-        const token = await this.$recaptcha.execute('login')
-        console.log('ReCaptcha token:', token)
-        if (!token) return false
-        // const r = await this.$auth().signInWithEmailAndPassword(
-        //   this.form.email,
-        //   this.form.password
-        // )
-        const r = await this.$axios.post(
-          'https://us-central1-memi-nuxt.cloudfunctions.net/auth/signin',
-          {
-            email: this.form.email,
-            password: this.form.password,
-            token: token
-          }
+        if (process.env.NODE_ENV === 'production') {
+          const cr = await this.checkRecaptcha()
+          if (!cr.success) throw Error('로봇 검증 실패')
+        }
+
+        const r = await this.$auth().signInWithEmailAndPassword(
+          this.form.email,
+          this.form.password
         )
         this.$router.push('/')
-        this.$store.commit('setUser', { displayName: 'test' })
         console.log(r)
       } catch (e) {
         console.error(e.message)
       }
+    },
+    async checkRecaptcha() {
+      const token = await this.$recaptcha.execute('login')
+      console.log('ReCaptcha token:', token)
+      if (!token) return false
+      const r = await this.$axios.post('/auth/recaptcha', { token })
+      return r.data
     }
   }
 }

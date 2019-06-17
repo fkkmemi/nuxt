@@ -17,8 +17,9 @@ module.exports = {
     ],
     script: [
       {
-        src:
-          'https://www.google.com/recaptcha/api.js?render=6LdVHKkUAAAAAOyoWHConyGQS2F-iAbFFw4e-8_V'
+        src: `https://www.google.com/recaptcha/api.js?render=${
+          process.env.RECAPTCHA_KEY
+        }`
       }
     ],
     link: [
@@ -70,14 +71,21 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    baseURL:
+      process.env.NODE_ENV === 'production'
+        ? `https://${process.env.FIREBASE_REGION}-${
+            process.env.FIREBASE_PROJECTID
+          }.cloudfunctions.net`
+        : `http://localhost:5000/${process.env.FIREBASE_PROJECTID}/${
+            process.env.FIREBASE_REGION
+          }`
   },
   router: {
     middleware: 'auth'
   },
   recaptcha: {
     hideBadge: true,
-    siteKey: '6LdVHKkUAAAAAOyoWHConyGQS2F-iAbFFw4e-8_V',
-
+    siteKey: process.env.RECAPTCHA_KEY,
     version: 3
   },
 
@@ -115,6 +123,6 @@ module.exports = {
     FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,
     FIREBASE_AUTHDOMAIN: process.env.FIREBASE_AUTHDOMAIN,
     FIREBASE_PROJECTID: process.env.FIREBASE_PROJECTID,
-    abcd: 1234
+    RECAPTCHA_KEY: process.env.RECAPTCHA_KEY
   }
 }
